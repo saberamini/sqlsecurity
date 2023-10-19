@@ -45,7 +45,7 @@ FOR EACH ROW
 EXECUTE FUNCTION validate_phone_number();
 ```
 3. Range and Data Type Validation
-`sql
+```sql
 CREATE OR REPLACE FUNCTION validate_inventory_quantity()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -62,7 +62,7 @@ FOR EACH ROW
 EXECUTE FUNCTION validate_inventory_quantity();
 ```
 ## Custom Business Rules
-`sql
+```sql
 CREATE OR REPLACE FUNCTION check_order_credit_limit()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -78,11 +78,12 @@ BEFORE INSERT ON orders
 FOR EACH ROW
 EXECUTE FUNCTION check_order_credit_limit();
 
-
+```
 # Preventing Unauthorized Modifications
 ## Access Control Logic
 
 Sample scenario: Using a trigger to block non-administrative users from updating certain records in a personnel table.
+```sql
 CREATE OR REPLACE FUNCTION prevent_unauthorized_update()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -97,6 +98,6 @@ CREATE TRIGGER prevent_unauthorized_update_trigger
 BEFORE UPDATE ON personnel
 FOR EACH ROW
 EXECUTE FUNCTION prevent_unauthorized_update();
-
+```
 
 
