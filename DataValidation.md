@@ -45,7 +45,7 @@ FOR EACH ROW
 EXECUTE FUNCTION validate_phone_number();
 ```
 3. Range and Data Type Validation
-```sql
+~~~sql
 CREATE OR REPLACE FUNCTION validate_inventory_quantity()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -60,7 +60,7 @@ CREATE TRIGGER validate_inventory_quantity_trigger
 BEFORE INSERT OR UPDATE ON inventory
 FOR EACH ROW
 EXECUTE FUNCTION validate_inventory_quantity();
-```
+~~~
 ## Custom Business Rules
 ```sql
 CREATE OR REPLACE FUNCTION check_order_credit_limit()
