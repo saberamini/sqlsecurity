@@ -61,7 +61,7 @@ BEFORE INSERT OR UPDATE ON inventory
 FOR EACH ROW
 EXECUTE FUNCTION validate_inventory_quantity();
 ~~~
-## Custom Business Rules
+4. Custom Business Rules
 ```sql
 CREATE OR REPLACE FUNCTION check_order_credit_limit()
 RETURNS TRIGGER AS $$
