@@ -79,8 +79,8 @@ FOR EACH ROW
 EXECUTE FUNCTION check_order_credit_limit();
 
 ```
-# Preventing Unauthorized Modifications
-## Access Control Logic
+## Preventing Unauthorized Modifications
+1.0 Access Control Logic
 
 Sample scenario: Using a trigger to block non-administrative users from updating certain records in a personnel table.
 ```sql
@@ -98,6 +98,62 @@ CREATE TRIGGER prevent_unauthorized_update_trigger
 BEFORE UPDATE ON personnel
 FOR EACH ROW
 EXECUTE FUNCTION prevent_unauthorized_update();
+```
+2.0 Row-Level Security
+```sql
+Sample scenario: Implementing row-level security to restrict access to sensitive HR data.
+CREATE OR REPLACE FUNCTION hr_security_policy()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF (SELECT role FROM users WHERE id = current_user_id()) != 'hr' THEN
+        RAISE EXCEPTION 'Access denied to HR data';
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE POLICY hr_security ON employee_data
+FOR SELECT USING (hr_security_policy());
+```
+3.0 Auditing Unauthorized Access
+
+Sample scenario: Logging unauthorized access attempts to a login_attempts table.
+
+```sql
+CREATE OR REPLACE FUNCTION log_login_attempt()
+RETURNS TRIGGER AS $$
+BEGIN
+    INSERT INTO login_attempts (username, timestamp)
+    VALUES (NEW.username, NOW());
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER log_login_attempt_trigger
+BEFORE INSERT ON login_attempts
+FOR EACH ROW
+EXECUTE FUNCTION log_login_attempt();
+```
+## Data Masking and Redaction
+1.0 Masking Sensitive Data
+
+Sample scenario: Masking credit card numbers in a transactions table for non-administrative users.
+
+```sql
+CREATE OR REPLACE FUNCTION mask_credit_card()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF (SELECT role FROM users WHERE id = current_user_id()) != 'admin' THEN
+        NEW.credit_card_number = 'XXXX-XXXX-XXXX-' || RIGHT(NEW.credit_card_number, 4);
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER mask_credit_card_trigger
+BEFORE INSERT OR UPDATE ON transactions
+FOR EACH ROW
+EXECUTE FUNCTION mask_credit_card();
 ```
 
 
