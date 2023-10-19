@@ -42,3 +42,38 @@ CREATE TRIGGER validate_phone_trigger
 BEFORE INSERT OR UPDATE ON contacts
 FOR EACH ROW
 EXECUTE FUNCTION validate_phone_number();
+
+## Range and Data Type Validation
+```sql
+CREATE OR REPLACE FUNCTION validate_inventory_quantity()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF NEW.quantity < 0 THEN
+        RAISE EXCEPTION 'Quantity cannot be negative';
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER validate_inventory_quantity_trigger
+BEFORE INSERT OR UPDATE ON inventory
+FOR EACH ROW
+EXECUTE FUNCTION validate_inventory_quantity();
+
+## Custom Business Rules
+```sql
+CREATE OR REPLACE FUNCTION check_order_credit_limit()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF NEW.order_amount > (SELECT credit_limit FROM customers WHERE id = NEW.customer_id) THEN
+        RAISE EXCEPTION 'Order amount exceeds credit limit';
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER check_order_credit_limit_trigger
+BEFORE INSERT ON orders
+FOR EACH ROW
+EXECUTE FUNCTION check_order_credit_limit();
+
