@@ -1,9 +1,5 @@
 # Enforcing Database Security Policies with PostgreSQL Triggers
 
-**Author:** Your Name
-
-**Date:** Today's Date
-
 ## Introduction
 
 - Overview of database security and the importance of enforcing policies.
