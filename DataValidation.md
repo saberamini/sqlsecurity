@@ -26,7 +26,7 @@
    BEFORE INSERT OR UPDATE ON users
    FOR EACH ROW
    EXECUTE FUNCTION validate_email();
-## Validating Data Formats
+2. Validating Data Formats
 ```sql
 CREATE OR REPLACE FUNCTION validate_phone_number()
 RETURNS TRIGGER AS $$
