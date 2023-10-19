@@ -26,3 +26,19 @@
    BEFORE INSERT OR UPDATE ON users
    FOR EACH ROW
    EXECUTE FUNCTION validate_email();
+## Validating Data Formats
+```sql
+CREATE OR REPLACE FUNCTION validate_phone_number()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF NEW.phone_number !~* '^\d{3}-\d{3}-\d{4}$' THEN
+        RAISE EXCEPTION 'Invalid phone number format';
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER validate_phone_trigger
+BEFORE INSERT OR UPDATE ON contacts
+FOR EACH ROW
+EXECUTE FUNCTION validate_phone_number();
