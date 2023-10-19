@@ -77,3 +77,25 @@ BEFORE INSERT ON orders
 FOR EACH ROW
 EXECUTE FUNCTION check_order_credit_limit();
 
+
+# Preventing Unauthorized Modifications
+## Access Control Logic
+
+Sample scenario: Using a trigger to block non-administrative users from updating certain records in a personnel table.
+CREATE OR REPLACE FUNCTION prevent_unauthorized_update()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF NEW.role != 'admin' THEN
+        RAISE EXCEPTION 'Only administrators can update personnel records';
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER prevent_unauthorized_update_trigger
+BEFORE UPDATE ON personnel
+FOR EACH ROW
+EXECUTE FUNCTION prevent_unauthorized_update();
+
+
+
