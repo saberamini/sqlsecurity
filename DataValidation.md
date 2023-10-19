@@ -156,4 +156,82 @@ FOR EACH ROW
 EXECUTE FUNCTION mask_credit_card();
 ```
 
+2.0 Redaction of PII
+```sql
+Sample scenario: Redacting personally identifiable information (PII) in a customer_info table.
+CREATE OR REPLACE FUNCTION redact_pii()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.first_name = 'Redacted';
+    NEW.last_name = 'Redacted';
+    NEW.email = 'Redacted';
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER redact_pii_trigger
+BEFORE INSERT OR UPDATE ON customer_info
+FOR EACH ROW
+EXECUTE FUNCTION redact_pii();
+```
+# Customized Security Policies
+1.0 Dynamic Policies
+
+Sample scenario: Implementing dynamic security policies that restrict access to records based on their status.
+```sql
+CREATE OR REPLACE FUNCTION dynamic_security_policy()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF NEW.status = 'archived' AND current_user_id() != NEW.owner_id THEN
+        RAISE EXCEPTION 'Access denied to archived records';
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER dynamic_security_policy_trigger
+BEFORE SELECT ON records
+FOR EACH ROW
+EXECUTE FUNCTION dynamic_security_policy();
+```
+2.0 Custom Authentication
+
+Sample scenario: Using a trigger to implement custom authentication logic for specific user groups.
+```sql
+CREATE OR REPLACE FUNCTION custom_authentication()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF NEW.user_group = 'special' AND NEW.custom_token != 'secret' THEN
+        RAISE EXCEPTION 'Authentication failed for special user group';
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER custom_authentication_trigger
+BEFORE INSERT ON users
+FOR EACH ROW
+EXECUTE FUNCTION custom_authentication();
+```
+
+# Alerting and Reporting
+1.0 Security Violation Alerts
+
+Sample scenario: Creating alerts and notifications when a trigger detects a security violation.
+```sql
+CREATE OR REPLACE FUNCTION security_violation_alert()
+RETURNS TRIGGER AS $$
+BEGIN
+    INSERT INTO security_alerts (event, timestamp)
+    VALUES ('Security Violation', NOW());
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER security_violation_alert_trigger
+AFTER INSERT ON security_logs
+FOR EACH ROW
+EXECUTE FUNCTION security_violation_alert();
+```
+
 
