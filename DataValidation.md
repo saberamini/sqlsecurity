@@ -4,8 +4,10 @@
 
 - Overview of database security and the importance of enforcing policies.
 - Introduction to triggers as a tool for enforcing security policies in PostgreSQL.
+- 
 
 ## Data Validation
+Data validation involves the process of verifying that data conforms to a set of predefined rules or criteria before it is accepted into a database. This validation ensures that the data is accurate, consistent, and reliable for use in applications and reporting. Data validation is crucial for maintaining data integrity, preventing errors, and enhancing the overall quality of a database.
 
 1. **Use of `BEFORE` Triggers**
 
@@ -28,6 +30,8 @@
    EXECUTE FUNCTION validate_email();
 
 2. Validating Data Formats
+Sample scenario: Ensuring that phone numbers in a contacts table follow a specific format.
+
 ```sql
 CREATE OR REPLACE FUNCTION validate_phone_number()
 RETURNS TRIGGER AS $$
@@ -45,6 +49,7 @@ FOR EACH ROW
 EXECUTE FUNCTION validate_phone_number();
 ```
 3. Range and Data Type Validation
+Sample scenario: Preventing the insertion of negative quantities in an inventory table.
 ~~~sql
 CREATE OR REPLACE FUNCTION validate_inventory_quantity()
 RETURNS TRIGGER AS $$
@@ -62,6 +67,8 @@ FOR EACH ROW
 EXECUTE FUNCTION validate_inventory_quantity();
 ~~~
 4. Custom Business Rules
+Sample scenario: Implementing a custom rule to restrict order amounts based on customer credit limits.
+
 ```sql
 CREATE OR REPLACE FUNCTION check_order_credit_limit()
 RETURNS TRIGGER AS $$
