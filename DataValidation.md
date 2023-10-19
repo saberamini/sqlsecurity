@@ -26,6 +26,7 @@
    BEFORE INSERT OR UPDATE ON users
    FOR EACH ROW
    EXECUTE FUNCTION validate_email();
+
 2. Validating Data Formats
 ```sql
 CREATE OR REPLACE FUNCTION validate_phone_number()
@@ -42,8 +43,8 @@ CREATE TRIGGER validate_phone_trigger
 BEFORE INSERT OR UPDATE ON contacts
 FOR EACH ROW
 EXECUTE FUNCTION validate_phone_number();
-
-## Range and Data Type Validation
+```
+3. Range and Data Type Validation
 ```sql
 CREATE OR REPLACE FUNCTION validate_inventory_quantity()
 RETURNS TRIGGER AS $$
