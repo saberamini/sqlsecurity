@@ -157,9 +157,7 @@ Sample scenario: Masking credit card numbers in a transactions table for non-adm
 CREATE OR REPLACE FUNCTION mask_credit_card()
 RETURNS TRIGGER AS $$
 BEGIN
-    IF (SELECT role FROM users WHERE id = current_user_id()) != 'admin' THEN
-        NEW.credit_card_number = 'XXXX-XXXX-XXXX-' || RIGHT(NEW.credit_card_number, 4);
-    END IF;
+    NEW.credit_card_number = 'XXXX-XXXX-XXXX-' || RIGHT(NEW.credit_card_number, 4);
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
