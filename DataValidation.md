@@ -11,7 +11,7 @@ Data validation involves the process of verifying that data conforms to a set of
 
 1. **Use of `BEFORE` Triggers**
 
-   - Sample scenario: Enforcing email format validation before inserting records into a `users` table.
+   Sample scenario: Enforcing email format validation before inserting records into a `users` table.
    
    ```sql
    CREATE OR REPLACE FUNCTION validate_email()
@@ -30,6 +30,7 @@ Data validation involves the process of verifying that data conforms to a set of
    EXECUTE FUNCTION validate_email();
 
 2. Validating Data Formats
+
 Sample scenario: Ensuring that phone numbers in a contacts table follow a specific format.
 
 ```sql
@@ -49,7 +50,9 @@ FOR EACH ROW
 EXECUTE FUNCTION validate_phone_number();
 ```
 3. Range and Data Type Validation
+
 Sample scenario: Preventing the insertion of negative quantities in an inventory table.
+
 ~~~sql
 CREATE OR REPLACE FUNCTION validate_inventory_quantity()
 RETURNS TRIGGER AS $$
@@ -67,6 +70,7 @@ FOR EACH ROW
 EXECUTE FUNCTION validate_inventory_quantity();
 ~~~
 4. Custom Business Rules
+
 Sample scenario: Implementing a custom rule to restrict order amounts based on customer credit limits.
 
 ```sql
@@ -107,8 +111,11 @@ FOR EACH ROW
 EXECUTE FUNCTION prevent_unauthorized_update();
 ```
 2.0 Row-Level Security
-```sql
+
 Sample scenario: Implementing row-level security to restrict access to sensitive HR data.
+
+
+```sql
 CREATE OR REPLACE FUNCTION hr_security_policy()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -164,8 +171,10 @@ EXECUTE FUNCTION mask_credit_card();
 ```
 
 2.0 Redaction of PII
-```sql
+
 Sample scenario: Redacting personally identifiable information (PII) in a customer_info table.
+
+```sql
 CREATE OR REPLACE FUNCTION redact_pii()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -185,6 +194,7 @@ EXECUTE FUNCTION redact_pii();
 1.0 Dynamic Policies
 
 Sample scenario: Implementing dynamic security policies that restrict access to records based on their status.
+
 ```sql
 CREATE OR REPLACE FUNCTION dynamic_security_policy()
 RETURNS TRIGGER AS $$
