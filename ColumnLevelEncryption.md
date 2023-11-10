@@ -23,10 +23,38 @@ CREATE TABLE customer_data (
     credit_card_number bytea -- Bytea type for storing encrypted data
 );
 ```
-Now, let's insert an encrypted credit card number into the table:
+Now, let's insert an encrypted credit card number into the table.  Note that encryption_key can be anything you like, any name suffices.  Where these keys are saved is very important and this will be discussed separately.
 
 ```sql
 -- Insert encrypted credit card number
 INSERT INTO customer_data (name, credit_card_number)
 VALUES ('John Doe', pgp_sym_encrypt('1234-5678-9012-3456', 'encryption_key'));
 ```
+If you now try to read the data, the credit card number column will be decrypted
+
+```sql
+SELECT * FROM customer_data;
+```
+
+To decrypt the credit card number when retrieving it, you can use the pgp_sym_decrypt function:
+
+```sql
+-- Retrieve and decrypt the credit card number
+SELECT name, pgp_sym_decrypt(credit_card_number, 'encryption_key') AS decrypted_credit_card
+FROM customer_data;
+```
+## Example 1: Encrypting Email Addresses
+Suppose you have a table called `user_info` with an `email` column that you want to encrypt.
+```sql
+-- Create the table
+CREATE TABLE user_info (
+    id serial PRIMARY KEY,
+    username varchar(255),
+    email bytea -- Bytea type for storing encrypted data
+);
+```
+Inserting an encrypted email address:
+
+
+
+
