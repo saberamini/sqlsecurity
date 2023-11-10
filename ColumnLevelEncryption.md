@@ -66,6 +66,32 @@ To retrieve and decrypt the email address:
 SELECT username, pgp_sym_decrypt(email, 'encryption_key') AS decrypted_email
 FROM user_info;
 ```
+## Using triggers
+Often it is better to hide the direct callling of the ecnryption and decryption functions and use triggers to implement them.
+Suppose you have a table named sensitive_data with columns id, name, and credit_card_number. You want to automatically encrypt the credit_card_number column before inserting records and decrypt it when retrieving records.
 
+1. ** Create the sensitive data **
+
+```sql
+CREATE TABLE sensitive_data (
+    id serial PRIMARY KEY,
+    name varchar(255),
+    credit_card_number bytea
+);
+```
+
+2. ** Create a trigger function to encrypt data before insertion.*
+
+ This function will be called before an INSERT operation on the sensitive_data table:
+
+```sql
+CREATE OR REPLACE FUNCTION encrypt_credit_card()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.credit_card_number := pgp_sym_encrypt(NEW.credit_card_number::text, 'encryption_key');
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+```
 
 
