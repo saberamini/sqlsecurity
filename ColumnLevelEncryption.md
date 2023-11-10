@@ -23,3 +23,10 @@ CREATE TABLE customer_data (
     credit_card_number bytea -- Bytea type for storing encrypted data
 );
 ```
+Now, let's insert an encrypted credit card number into the table:
+
+```sql
+-- Insert encrypted credit card number
+INSERT INTO customer_data (name, credit_card_number)
+VALUES ('John Doe', pgp_sym_encrypt('1234-5678-9012-3456', 'encryption_key'));
+```
