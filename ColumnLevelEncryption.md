@@ -11,7 +11,7 @@ CREATE EXTENSION IF NOT EXISTS pgcrypto;
 ```
 Once the extension is created, you can use its functions, such as pgp_sym_encrypt and pgp_sym_decrypt, to perform cryptographic operations within your PostgreSQL database.
 
-## Example 1: Encrypting Credit Card Numbers
+## Example 2: Encrypting Credit Card Numbers
 
 Let's say you have a table called `customer_data` with a column `credit_card_number` that you want to encrypt.
 
@@ -94,4 +94,32 @@ END;
 $$ LANGUAGE plpgsql;
 ```
 
+3. Create a BEFORE INSERT trigger that invokes the encrypt_credit_card function:
+```sql
+CREATE TRIGGER encrypt_credit_card_trigger
+BEFORE INSERT ON sensitive_data
+FOR EACH ROW
+EXECUTE FUNCTION encrypt_credit_card();
+```
+This trigger ensures that the credit_card_number is encrypted before it is inserted into the sensitive_data table.
+
+4. Create a trigger function to decrypt data after retrieval. This function will be called after a SELECT operation on the sensitive_data table:
+
+```sql
+CREATE OR REPLACE FUNCTION decrypt_credit_card()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.credit_card_number := pgp_sym_decrypt(NEW.credit_card_number, 'encryption_key');
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+```
+5. Create an AFTER SELECT trigger that invokes the decrypt_credit_card function:
+```sql
+CREATE TRIGGER decrypt_credit_card_trigger
+AFTER SELECT ON sensitive_data
+FOR EACH ROW
+EXECUTE FUNCTION decrypt_credit_card();
+```
+This trigger ensures that the credit_card_number is decrypted after it is retrieved from the sensitive_data table
 
