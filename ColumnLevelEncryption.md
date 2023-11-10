@@ -54,7 +54,18 @@ CREATE TABLE user_info (
 );
 ```
 Inserting an encrypted email address:
+```sql
+-- Insert encrypted email address
+INSERT INTO user_info (username, email)
+VALUES ('alice', pgp_sym_encrypt('alice@example.com', 'encryption_key'));
+```
+To retrieve and decrypt the email address:
 
+```sql
+-- Retrieve and decrypt the email address
+SELECT username, pgp_sym_decrypt(email, 'encryption_key') AS decrypted_email
+FROM user_info;
+```
 
 
 
