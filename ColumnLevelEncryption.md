@@ -7,7 +7,6 @@ The "pgcrypto" extension is a popular extension in PostgreSQL that provides cryp
 
 Generally the module is available by default in any Postgre
 ```sql
--- Create the table
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
 ```
 Once the extension is created, you can use its functions, such as pgp_sym_encrypt and pgp_sym_decrypt, to perform cryptographic operations within your PostgreSQL database.
