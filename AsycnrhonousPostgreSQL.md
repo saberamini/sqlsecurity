@@ -19,10 +19,18 @@ In PostgreSQL, you can perform asymmetric encryption using the `pgcrypto` extens
    -----END PGP PUBLIC KEY BLOCK-----', 'key_name');
 ```
 ## Encrypting Data
-1. ** Encrypt Data with the Public Key:
-- Encrypt data using the public key. The data can only be decrypted with the corresponding private key.
+1. **Encrypt Data with the Public Key**:
+   - Encrypt data using the public key. The data can only be decrypted with the corresponding private key.
 ```sql
 -- Encrypt data with the public key
 SELECT pgp_pub_encrypt('Sensitive data', 'key_name');
+```
+
+## Decrypting Data
+1. **Decrypt Data with the Private Key:**
+- Decrypting data encrypted with the public key requires the private key and the associated passphrase.
+```sql
+-- Decrypt data with the private key
+SELECT pgp_priv_decrypt(encrypted_data, 'private_key_passphrase') AS decrypted_data;
 ```
 
