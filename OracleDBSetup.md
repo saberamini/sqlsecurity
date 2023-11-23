@@ -3,6 +3,12 @@
 1. **Download Oracle Database Software**:
    - Visit the official Oracle Technology Network (OTN) or Oracle Software Delivery Cloud website to download the Oracle Database installation files for Ubuntu.
 
+#### Step 1: Install Dependencies
+```bash
+sudo apt-get update
+sudo apt-get install build-essential unzip libaio1 alien
+```
+
 2. **Extract the Installation Files**:
    - After downloading the installation file, transfer it to your Ubuntu server.
    - Use the `unzip` command to extract the contents of the zip file:
