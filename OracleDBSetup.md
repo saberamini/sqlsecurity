@@ -15,7 +15,17 @@ sudo apt-get update
 sudo apt-get install build-essential unzip libaio1 alien
 ```
 
-
+3. **Create Oracle User and Groups
+```bash
+sudo groupadd oinstall
+sudo groupadd dba
+sudo useradd -m -g oinstall -G dba oracle
+```
+4. **Create password for User oracle
+Run the following command and went prompted, enter a password for user oracle
+```bash
+sudo passwd oracle
+```
 
 3. **Run the Oracle Universal Installer**:
    - Change into the directory where the installation files were extracted.
