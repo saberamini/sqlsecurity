@@ -9,7 +9,7 @@
      ```
      unzip filename.zip
      ```
-#### Step 1: Install Dependencies
+3. **Install Dependencies
 ```bash
 sudo apt-get update
 sudo apt-get install build-essential unzip libaio1 alien
