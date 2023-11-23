@@ -1,36 +1,43 @@
 ### Installing Oracle Database on Ubuntu
 
 1. **Download Oracle Database Software**:
-   - Visit the official Oracle Technology Network (OTN) or Oracle Software Delivery Cloud website to download the Oracle Database installation files for Ubuntu.
+   - use the wget command provided (see course shell, not shown here for security purposes)
+```bash
+wget https://IP_ADDRESS/LINUX.X64_193000_db_home.zip
+```
 
-2. **Extract the Installation Files**:
-   - After downloading the installation file, transfer it to your Ubuntu server.
-   - Use the `unzip` command to extract the contents of the zip file:
-     ```
-     unzip filename.zip
-     ```
-3. **Install Dependencies
+2. **Install Dependencies**
 ```bash
 sudo apt-get update
 sudo apt-get install build-essential unzip libaio1 alien
 ```
 
-3. **Create Oracle User and Groups
+3. **Create Oracle User and Groups**
 ```bash
 sudo groupadd oinstall
 sudo groupadd dba
 sudo useradd -m -g oinstall -G dba oracle
 ```
-4. **Create password for User oracle
+4. **Create password for User oracle**
 Run the following command and went prompted, enter a password for user oracle
 ```bash
 sudo passwd oracle
 ```
-5.   **Swtich to oracle user
+2. **Extract the Installation Files**:
+   - After downloading the installation file, create a new folder
+```bash
+mkdir oracle-db
+cd oracle-db
+```
+   - Use the `unzip` command to extract the contents of the zip file:
+```bash
+unzip LINUX.X64_193000_db_home.zip
+```
+5.   **Switch to oracle user
 ```bash
      su - oracle
 ```
-5. **Kernel parameter tuning
+6. **Kernel parameter tuning
    - You'll need to modify some kernel parameters. Edit the /etc/sysctl.conf file and add the following lines: 
 ```bash
 fs.file-max = 6815744
@@ -43,13 +50,13 @@ kernel.shmall = 2097152
 ```bash
 sudo sysctl -p
 ```
-6. **Set the DISPLAY Variable:
+7. **Set the DISPLAY Variable:
    - Before running the Oracle Universal Installer, set the DISPLAY variable to a dummy display value:
 ```bash
 export DISPLAY=:0.0
 ```
 
-7. **Run the Oracle Universal Installer**:
+8. **Run the Oracle Universal Installer**:
    - Change into the directory where the installation files were extracted.
    - Run the Oracle Universal Installer as the `oracle` user:
      ```
@@ -57,7 +64,7 @@ export DISPLAY=:0.0
      ./runInstaller
      ```
 
-8. **Installation Wizard**:
+9. **Installation Wizard**:
    - Follow the Oracle Universal Installer prompts:
      - Specify the Oracle Home directory.
      - Choose the Oracle Database edition.
