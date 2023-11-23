@@ -26,6 +26,10 @@ Run the following command and went prompted, enter a password for user oracle
 ```bash
 sudo passwd oracle
 ```
+5.   **Swtich to oracle user
+```bash
+     su - oracle
+```
 5. **Kernel parameter tuning
    - You'll need to modify some kernel parameters. Edit the /etc/sysctl.conf file and add the following lines: 
 ```bash
@@ -49,7 +53,6 @@ export DISPLAY=:0.0
    - Change into the directory where the installation files were extracted.
    - Run the Oracle Universal Installer as the `oracle` user:
      ```
-     su - oracle
      cd path/to/extracted/directory
      ./runInstaller
      ```
