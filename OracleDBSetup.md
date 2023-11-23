@@ -26,8 +26,20 @@ Run the following command and went prompted, enter a password for user oracle
 ```bash
 sudo passwd oracle
 ```
+5. **Kernel parameter tuning
+   - You'll need to modify some kernel parameters. Edit the /etc/sysctl.conf file and add the following lines: 
+```bash
+fs.file-max = 6815744
+kernel.sem = 250 32000 100 128
+kernel.shmmax = 536870912
+kernel.shmall = 2097152
+```
+   - Then, run the following command to apply the changes:
 
-3. **Run the Oracle Universal Installer**:
+```bash
+sudo sysctl -p
+```
+6. **Run the Oracle Universal Installer**:
    - Change into the directory where the installation files were extracted.
    - Run the Oracle Universal Installer as the `oracle` user:
      ```
@@ -36,22 +48,13 @@ sudo passwd oracle
      ./runInstaller
      ```
 
-4. **Installation Wizard**:
+7. **Installation Wizard**:
    - Follow the Oracle Universal Installer prompts:
      - Specify the Oracle Home directory.
      - Choose the Oracle Database edition.
      - Configure the database name, system password, and other settings.
      - Configure the listener settings.
      - Specify database storage details.
-
-5. **Installation Progress**:
-   - Wait for the installation process to complete.
-
-6. **Run Root Scripts**:
-   - After installation, the installer will prompt you to run root scripts as the root user. Execute these scripts to configure the system for Oracle Database.
-
-7. **Completing the Installation**:
-   - Once the root scripts are executed, the installation process is complete.
 
 8. **Verify Installation**:
    - Connect to Oracle Database using SQL*Plus or another Oracle client tool to verify the installation:
@@ -61,6 +64,3 @@ sudo passwd oracle
 
    Replace `sys` and `sysdba` with your actual username and role.
 
-Please note that this is a simplified overview of the installation process. Refer to Oracle's official documentation for detailed instructions and troubleshooting.
-
-**Important**: Oracle Database is primarily designed for Oracle Linux and other supported operating systems. Using it on Ubuntu may require additional configuration and is not officially supported by Oracle.
