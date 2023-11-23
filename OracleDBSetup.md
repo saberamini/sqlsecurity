@@ -39,7 +39,13 @@ kernel.shmall = 2097152
 ```bash
 sudo sysctl -p
 ```
-6. **Run the Oracle Universal Installer**:
+6. **Set the DISPLAY Variable:
+   - Before running the Oracle Universal Installer, set the DISPLAY variable to a dummy display value:
+```bash
+export DISPLAY=:0.0
+```
+
+7. **Run the Oracle Universal Installer**:
    - Change into the directory where the installation files were extracted.
    - Run the Oracle Universal Installer as the `oracle` user:
      ```
@@ -48,7 +54,7 @@ sudo sysctl -p
      ./runInstaller
      ```
 
-7. **Installation Wizard**:
+8. **Installation Wizard**:
    - Follow the Oracle Universal Installer prompts:
      - Specify the Oracle Home directory.
      - Choose the Oracle Database edition.
@@ -56,7 +62,7 @@ sudo sysctl -p
      - Configure the listener settings.
      - Specify database storage details.
 
-8. **Verify Installation**:
+9. **Verify Installation**:
    - Connect to Oracle Database using SQL*Plus or another Oracle client tool to verify the installation:
      ```
      sqlplus sys as sysdba
