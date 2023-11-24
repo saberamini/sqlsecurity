@@ -3,7 +3,7 @@
 
 1. **Install Dependencies**
 
-Various packages are needed for install the Oracle.
+Various packages are needed for installation of the Oracle DB.
    - We first update the packages
 ```bash
 sudo apt-get update
