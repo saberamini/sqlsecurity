@@ -46,7 +46,8 @@ sudo sysctl -p
    - use the wget command provided (see course shell, not shown here for security purposes)
    - Note you can download the file as root user and then transfer the file to oracle home as well
 ```bash
-wget https://IP_ADDRESS/LINUX.X64_193000_db_home.zip
+wget https://IP_ADDRESS/LINUX.X64_193000_db_home.zip -d /$ORACLE_HOME
+
 ```
 
 7. **Extract the Installation Files**:
@@ -57,7 +58,7 @@ cd oracle-db
 ```
    - Use the `unzip` command to extract the contents of the zip file:
 ```bash
-unzip LINUX.X64_193000_db_home.zip
+sudo unzip -q LINUX.X64_193000_db_home.zip -d /u01/
 ```
 
 9. **Set the DISPLAY Variable:
