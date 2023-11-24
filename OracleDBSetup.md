@@ -2,6 +2,7 @@
 
 
 1. **Install Dependencies**
+
 Various packages are needed for install the Oracle.
    - We first update the packages
 ```bash
