@@ -2,9 +2,14 @@
 
 
 1. **Install Dependencies**
+Various packages are needed for install the Oracle.
+   - We first update the packages
 ```bash
 sudo apt-get update
-sudo apt-get install build-essential unzip libaio1 alien
+```
+   - Then we install packages we need
+```bash
+sudo apt-get install build-essential unzip libaio1 alien asianux-release
 ```
 
 2. **Create Oracle User and Groups**
