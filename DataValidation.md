@@ -27,6 +27,18 @@ Data validation involves the process of verifying that data conforms to a set of
    FOR EACH ROW
    EXECUTE FUNCTION validate_email();
 
+Testing the trigger
+```sql
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100),
+    email VARCHAR(255) NOT NULL
+);
+-- a correct insertion
+INSERT INTO users (name, email) VALUES ('John Doe', 'john.doe@example.com');
+-- A wrong insertion
+INSERT INTO users (name, email) VALUES ('Jane Doe', 'jane.doe@');
+
 2. Validating Data Formats
 
 Sample scenario: Ensuring that phone numbers in a contacts table follow a specific format.
