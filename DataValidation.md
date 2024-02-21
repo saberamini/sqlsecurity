@@ -120,6 +120,27 @@ BEFORE UPDATE ON personnel
 FOR EACH ROW
 EXECUTE FUNCTION prevent_unauthorized_update();
 ```
+Testing the Trigger
+```sql
+-- create the personell table
+CREATE TABLE personnel (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100),
+    role VARCHAR(50) NOT NULL
+);
+-- insert sample data
+INSERT INTO personnel (name, role) VALUES ('Alice', 'admin');
+INSERT INTO personnel (name, role) VALUES ('Bob', 'staff');
+
+-- test case 1: authorized update
+-- Attempt to update an 'admin' role record, which should be allowed
+UPDATE personnel SET name = 'Alice Updated' WHERE id = 1 AND role = 'admin';
+
+-- Test Case 2: Unauthorized update
+-- Attempt to update a non-admin role record, which should be blocked
+UPDATE personnel SET name = 'Bob Updated' WHERE id = 2 AND role != 'admin';
+```
+
 2.0 Row-Level Security
 
 Sample scenario: Implementing row-level security to restrict access to sensitive HR data.
